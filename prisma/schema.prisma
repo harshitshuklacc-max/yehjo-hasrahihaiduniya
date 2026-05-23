@@ -1,0 +1,256 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  TEACHER
+  STUDENT
+}
+
+enum LeaveStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+}
+
+model User {
+  id            String    @id @default(cuid())
+  username      String    @unique
+  email         String?
+  phone         String?
+  name          String
+  passwordHash  String
+  role          UserRole
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  teacher       Teacher?
+  student       Student?
+  loginLogs     LoginActivity[]
+  announcements Announcement[]
+}
+
+model Teacher {
+  id            String         @id @default(cuid())
+  userId        String         @unique
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subject       String?
+  qualification String?
+  experience    String?
+  bio           String?
+  photo         String?
+  batchLinks    BatchTeacher[]
+  homeworks     Homework[]
+  materials     StudyMaterial[]
+  tests         TestSchedule[]
+  leaveRequests LeaveRequest[]
+  createdAt     DateTime       @default(now())
+}
+
+model Student {
+  id              String            @id @default(cuid())
+  userId          String            @unique
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parentName      String?
+  parentPhone     String?
+  classLevel      String
+  address         String?
+  batchId         String?
+  batch           Batch?            @relation(fields: [batchId], references: [id])
+  isArchived      Boolean           @default(false)
+  archivedAt      DateTime?
+  recordExpiresAt DateTime?
+  feeRecord       FeeRecord?
+  attendances     Attendance[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+
+model Batch {
+  id          String          @id @default(cuid())
+  name        String
+  classLevel  String
+  stream      String?
+  timing      String?
+  capacity    Int             @default(30)
+  isActive    Boolean         @default(true)
+  students    Student[]
+  teachers    BatchTeacher[]
+  timetable   TimetableSlot[]
+  homeworks   Homework[]
+  materials   StudyMaterial[]
+  tests       TestSchedule[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+model BatchTeacher {
+  id        String  @id @default(cuid())
+  batchId   String
+  batch     Batch   @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  teacherId String
+  teacher   Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@unique([batchId, teacherId])
+}
+
+model TimetableSlot {
+  id        String  @id @default(cuid())
+  batchId   String
+  batch     Batch   @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  dayOfWeek Int
+  startTime String
+  endTime   String
+  subject   String
+  teacherId String?
+  room      String?
+}
+
+model Homework {
+  id          String   @id @default(cuid())
+  batchId     String
+  batch       Batch    @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  teacherId   String
+  teacher     Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  title       String
+  description String
+  dueDate     DateTime
+  attachments String   @default("[]")
+  createdAt   DateTime @default(now())
+}
+
+model StudyMaterial {
+  id          String   @id @default(cuid())
+  batchId     String
+  batch       Batch    @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  teacherId   String
+  teacher     Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  fileUrl     String
+  createdAt   DateTime @default(now())
+}
+
+model Announcement {
+  id          String   @id @default(cuid())
+  title       String
+  body        String
+  batchId     String?
+  targetRole  String?
+  createdById String
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  createdAt   DateTime @default(now())
+}
+
+model FeeRecord {
+  id         String        @id @default(cuid())
+  studentId  String        @unique
+  student    Student       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  totalFees  Float
+  paidFees   Float         @default(0)
+  dueDate    DateTime?
+  payments   FeePayment[]
+  updatedAt  DateTime      @updatedAt
+  createdAt  DateTime      @default(now())
+}
+
+model FeePayment {
+  id          String    @id @default(cuid())
+  feeRecordId String
+  feeRecord   FeeRecord @relation(fields: [feeRecordId], references: [id], onDelete: Cascade)
+  amount      Float
+  paidAt      DateTime  @default(now())
+  method      String?
+  note        String?
+}
+
+model TestSchedule {
+  id           String   @id @default(cuid())
+  batchId      String
+  batch        Batch    @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  teacherId    String
+  teacher      Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  subject      String
+  syllabus     String?
+  testDate     DateTime
+  startTime    String?
+  endTime      String?
+  instructions String?
+  createdAt    DateTime @default(now())
+}
+
+model LeaveRequest {
+  id          String      @id @default(cuid())
+  teacherId   String
+  teacher     Teacher     @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  startDate   DateTime
+  endDate     DateTime
+  reason      String
+  status      LeaveStatus @default(PENDING)
+  adminRemark String?
+  reviewedAt  DateTime?
+  createdAt   DateTime    @default(now())
+}
+
+model Attendance {
+  id        String           @id @default(cuid())
+  studentId String
+  student   Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  batchId   String
+  date      DateTime
+  status    AttendanceStatus @default(PRESENT)
+  note      String?
+
+  @@unique([studentId, date])
+}
+
+model LoginActivity {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ip        String?
+  userAgent String?
+  createdAt DateTime @default(now())
+}
+
+model StudentArchive {
+  id                String   @id @default(cuid())
+  originalStudentId String
+  originalUserId    String
+  snapshot          String
+  archivedAt        DateTime @default(now())
+  restoredAt        DateTime?
+}
+
+model FacultyShowcase {
+  id          String  @id @default(cuid())
+  name        String
+  subject     String
+  experience  String
+  bio         String?
+  photo       String?
+  order       Int     @default(0)
+  isActive    Boolean @default(true)
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  author    String
+  role      String
+  rating    Int      @default(5)
+  content   String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}

@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ssa-bg: #0a0a12;
+  --color-ssa-surface: #12121f;
+  --color-ssa-card: #1a1a2e;
+  --color-ssa-muted: #94a3b8;
+  --color-ssa-text: #f1f5f9;
+  --color-ssa-primary: #e31b23;
+  --color-ssa-secondary: #b91c1c;
+  --color-ssa-accent: #fbbf24;
+  --color-ssa-success: #22c55e;
+  --font-display: "Segoe UI", system-ui, sans-serif;
+  --font-body: "Segoe UI", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html.light {
+  --color-ssa-bg: #f8fafc;
+  --color-ssa-surface: #ffffff;
+  --color-ssa-card: #f1f5f9;
+  --color-ssa-muted: #64748b;
+  --color-ssa-text: #0f172a;
+}
+
+body {
+  background: var(--color-ssa-bg);
+  color: var(--color-ssa-text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-ssa-primary) 40%, transparent);
+  color: white;
+}
+
+.glass {
+  background: color-mix(in srgb, var(--color-ssa-surface) 70%, transparent);
+  backdrop-filter: blur(16px);
+  border: 1px solid color-mix(in srgb, var(--color-ssa-primary) 20%, transparent);
+}
+
+.glass-strong {
+  background: color-mix(in srgb, var(--color-ssa-surface) 85%, transparent);
+  backdrop-filter: blur(24px);
+  border: 1px solid color-mix(in srgb, var(--color-ssa-primary) 25%, transparent);
+}
+
+.gradient-hero {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, color-mix(in srgb, var(--color-ssa-primary) 25%, transparent), transparent 65%),
+    radial-gradient(ellipse 50% 40% at 90% 30%, color-mix(in srgb, var(--color-ssa-secondary) 15%, transparent), transparent 55%),
+    radial-gradient(ellipse 40% 30% at 10% 60%, color-mix(in srgb, var(--color-ssa-accent) 10%, transparent), transparent 50%),
+    var(--color-ssa-bg);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-ssa-primary), var(--color-ssa-secondary), var(--color-ssa-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card-hover {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(99, 102, 241, 0.15);
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold tracking-wide transition-all duration-300;
+  background: linear-gradient(135deg, var(--color-ssa-primary), var(--color-ssa-secondary));
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--color-ssa-primary) 40%, transparent);
+}
+
+.btn-ghost {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl border px-6 py-3 font-medium transition-all duration-300;
+  border-color: color-mix(in srgb, var(--color-ssa-primary) 40%, transparent);
+}
+
+.btn-ghost:hover {
+  background: color-mix(in srgb, var(--color-ssa-primary) 10%, transparent);
+}
+
+input,
+select,
+textarea {
+  @apply w-full rounded-xl border px-4 py-3 outline-none transition;
+  border-color: color-mix(in srgb, var(--color-ssa-primary) 25%, transparent);
+  background: color-mix(in srgb, var(--color-ssa-card) 80%, transparent);
+  color: var(--color-ssa-text);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--color-ssa-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-ssa-primary) 20%, transparent);
+}
+
+.dashboard-sidebar {
+  background: color-mix(in srgb, var(--color-ssa-surface) 95%, transparent);
+  border-right: 1px solid color-mix(in srgb, var(--color-ssa-primary) 15%, transparent);
+}
+
+.stat-card {
+  @apply rounded-2xl p-5;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-ssa-primary) 12%, transparent), color-mix(in srgb, var(--color-ssa-secondary) 8%, transparent));
+  border: 1px solid color-mix(in srgb, var(--color-ssa-primary) 20%, transparent);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.loading-shimmer {
+  background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--color-ssa-primary) 15%, transparent) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 2s linear infinite;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

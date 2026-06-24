@@ -4,45 +4,15 @@ Premium coaching institute website + ERP/LMS for Bilaspur, Chhattisgarh.
 
 ## Deploy on Vercel
 
-### 1. Database (required)
+**Full step-by-step:** see **[VERCEL-DEPLOY.md](./VERCEL-DEPLOY.md)**
 
-Vercel **cannot** use SQLite. Use a free PostgreSQL database:
+Summary:
 
-- [Neon](https://neon.tech) (recommended)
-- [Vercel Postgres](https://vercel.com/storage/postgres)
-- [Supabase](https://supabase.com)
-
-Copy the **connection string** (pooled + direct for Neon).
-
-### 2. Vercel environment variables
-
-In Vercel → Project → Settings → Environment Variables, add:
-
-| Name | Value |
-|------|--------|
-| `DATABASE_URL` | PostgreSQL pooled URL |
-| `DIRECT_URL` | PostgreSQL direct URL (same as Neon direct connection) |
-| `JWT_SECRET` | Long random string |
-| `NEXT_PUBLIC_SITE_URL` | `https://your-domain.vercel.app` |
-
-### 3. Push database schema (once)
-
-After first deploy, run locally (or in Vercel CLI):
-
-```bash
-npx prisma db push
-npx tsx prisma/seed.ts
-```
-
-Or connect Neon SQL editor and ensure tables exist after `db push`.
-
-### 4. Deploy
-
-Push to GitHub and import the repo in Vercel. Build command (auto from `vercel.json`):
-
-```
-prisma generate && next build
-```
+1. Create free DB at [Neon](https://neon.tech) (PostgreSQL).
+2. Push this folder to GitHub.
+3. Import repo on [vercel.com/new](https://vercel.com/new).
+4. Add env vars: `DATABASE_URL`, `DIRECT_URL`, `JWT_SECRET`, `NEXT_PUBLIC_SITE_URL`.
+5. Deploy — build runs `db push` + admin seed automatically.
 
 ### Admin login
 
@@ -52,9 +22,10 @@ prisma generate && next build
 
 ## Local development
 
+Use **Neon PostgreSQL** URLs in `.env` (same as Vercel). SQLite is not used after Vercel setup.
+
 ```bash
 npm install
-# .env is created automatically (SQLite file:./dev.db)
 npx prisma db push
 npm run db:seed
 npm run dev

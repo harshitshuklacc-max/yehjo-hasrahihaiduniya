@@ -60,8 +60,8 @@ export default async function HomePage() {
     <>
       {!dbReady && (
         <div className="bg-ssa-accent/10 border-b border-ssa-accent/30 px-4 py-2 text-center text-sm text-ssa-accent">
-          Database not connected. Add <code className="font-mono">DATABASE_URL</code> (PostgreSQL) in Vercel, then run{" "}
-          <code className="font-mono">npx prisma db push</code> and <code className="font-mono">npm run db:seed</code>
+          Database not connected. Run <code className="font-mono">setup-db.bat</code> or{" "}
+          <code className="font-mono">npx prisma db push</code> then <code className="font-mono">npm run db:seed</code>
         </div>
       )}
       <HomeSections faculty={faculty} testimonials={testimonials} />

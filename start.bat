@@ -9,11 +9,23 @@ if not exist node_modules call npm install
 if not exist .env (
   echo Creating .env...
   copy /Y .env.example .env >nul
+  echo.
+  echo Add Neon PostgreSQL URLs to .env for local run, or deploy on Vercel - see VERCEL-DEPLOY.md
+  echo.
 )
 
-if not exist prisma\dev.db (
-  call npx prisma db push
-  call npx tsx prisma/seed.ts
+echo Setting up database...
+call npx prisma db push
+if errorlevel 1 (
+  echo Database setup failed. Check Node.js and run: npm install
+  pause
+  exit /b 1
+)
+call npm run db:seed
+if errorlevel 1 (
+  echo Database seed failed.
+  pause
+  exit /b 1
 )
 
 start http://localhost:3000

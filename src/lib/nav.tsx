@@ -2,6 +2,7 @@ import {
   LayoutDashboard,
   Users,
   GraduationCap,
+  UserCircle,
   Layers,
   Calendar,
   IndianRupee,
@@ -18,6 +19,7 @@ import type { NavItem } from "@/components/dashboard/DashboardShell";
 export const adminNav: NavItem[] = [
   { href: "/admin", label: "Dashboard", icon: <LayoutDashboard className="h-4 w-4" /> },
   { href: "/admin/teachers", label: "Teachers", icon: <GraduationCap className="h-4 w-4" /> },
+  { href: "/admin/faculty", label: "Homepage Faculty", icon: <UserCircle className="h-4 w-4" /> },
   { href: "/admin/students", label: "Students", icon: <Users className="h-4 w-4" /> },
   { href: "/admin/batches", label: "Batches", icon: <Layers className="h-4 w-4" /> },
   { href: "/admin/timetable", label: "Timetable", icon: <Calendar className="h-4 w-4" /> },

@@ -13,18 +13,15 @@ export function PublicFooter() {
             {ACADEMY.tagline}. Premier coaching for Classes 5–12 in Bilaspur with experienced faculty
             and result-oriented learning.
           </p>
-          <div className="mt-4 flex gap-3">
-            {Object.entries(ACADEMY.social).map(([k, url]) => (
-              <a
-                key={k}
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-lg glass px-3 py-1.5 text-xs capitalize hover:text-ssa-primary"
-              >
-                {k}
-              </a>
-            ))}
+          <div className="mt-4">
+            <a
+              href={ACADEMY.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-lg glass px-3 py-1.5 text-xs hover:text-ssa-primary"
+            >
+              @{ACADEMY.instagramHandle}
+            </a>
           </div>
         </div>
         <div>
@@ -39,9 +36,16 @@ export function PublicFooter() {
           <h4 className="font-semibold mb-4">Contact</h4>
           <ul className="space-y-3 text-sm text-ssa-muted">
             <li className="flex gap-2"><MapPin className="h-4 w-4 shrink-0 text-ssa-primary" />{ACADEMY.address}</li>
-            <li className="flex gap-2"><Phone className="h-4 w-4 shrink-0 text-ssa-primary" /><a href={`tel:${ACADEMY.phone}`}>{ACADEMY.phone}</a></li>
+            <li className="flex gap-2">
+              <Phone className="h-4 w-4 shrink-0 text-ssa-primary" />
+              <span>
+                <a href={`tel:${ACADEMY.phone}`}>{ACADEMY.phone}</a>
+                {" · "}
+                <a href={`tel:${ACADEMY.phone2}`}>{ACADEMY.phone2}</a>
+              </span>
+            </li>
             <li className="flex gap-2"><Clock className="h-4 w-4 shrink-0 text-ssa-primary" />{ACADEMY.timings}</li>
-            <li className="flex gap-2"><Mail className="h-4 w-4 shrink-0 text-ssa-primary" />{ACADEMY.email}</li>
+            <li className="flex gap-2"><Mail className="h-4 w-4 shrink-0 text-ssa-primary" /><a href={`mailto:${ACADEMY.email}`}>{ACADEMY.email}</a></li>
           </ul>
         </div>
       </div>

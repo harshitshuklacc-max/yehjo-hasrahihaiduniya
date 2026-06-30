@@ -6,7 +6,7 @@ import { Menu, X, Sun, Moon } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { useTheme } from "@/components/providers/ThemeProvider";
 
-const links = [
+const baseLinks = [
   { href: "#about", label: "About" },
   { href: "#courses", label: "Courses" },
   { href: "#faculty", label: "Faculty" },
@@ -15,7 +15,8 @@ const links = [
   { href: "#contact", label: "Contact" },
 ];
 
-export function PublicNavbar() {
+export function PublicNavbar({ showFaculty = false }: { showFaculty?: boolean }) {
+  const links = showFaculty ? baseLinks : baseLinks.filter((l) => l.href !== "#faculty");
   const [open, setOpen] = useState(false);
   const { theme, toggle } = useTheme();
 

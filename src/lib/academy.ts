@@ -9,22 +9,23 @@ export const ACADEMY = {
     "2nd Floor, City Tower, Gaurav Path, opposite Umang Hospital, Bilaspur, Chhattisgarh 495001",
   phone: "+91 97522 55335",
   phoneRaw: "919752255335",
+  phone2: "8305805335",
+  phone2Raw: "918305805335",
   whatsapp: "https://wa.me/919752255335",
-  email: "info@smartstepacademy.in",
+  email: "Smartstepbsp@gmail.com",
   timings: "Open daily until 9 PM",
   city: "Bilaspur",
   state: "Chhattisgarh",
   mapEmbed:
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3718.9!2d82.15!3d22.09!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDA1JzI0LjAiTiA4MsKwMDknMDAuMCJF!5e0!3m2!1sen!2sin!4v1",
+    "https://www.google.com/maps?q=Smart+Step+Academy,+Bilaspur,+Chhattisgarh&hl=en&z=16&output=embed",
   mapLink: "https://maps.google.com/?q=Smart+Step+Academy+Bilaspur",
   logo: "/logo.png",
   favicon: "/logo.png",
   brandRed: "#E31B23",
   social: {
-    facebook: "https://facebook.com",
-    instagram: "https://instagram.com",
-    youtube: "https://youtube.com",
+    instagram: "https://instagram.com/smartstep_academy",
   },
+  instagramHandle: "smartstep_academy",
 };
 
 export const COURSES = [
@@ -77,7 +78,6 @@ export const WHY_CHOOSE = [
 ];
 
 export const BATCHES_INFO = [
-  { name: "Morning Batch", timing: "7:00 AM – 12:00 PM", classes: "5th – 10th" },
   { name: "Afternoon Batch", timing: "2:00 PM – 6:00 PM", classes: "11th & 12th Commerce" },
   { name: "Evening Batch", timing: "5:00 PM – 9:00 PM", classes: "5th – 12th" },
 ];

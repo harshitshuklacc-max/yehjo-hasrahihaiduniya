@@ -15,6 +15,7 @@ import {
   GraduationCap,
   Phone,
   ArrowRight,
+  Mail,
 } from "lucide-react";
 import { ACADEMY, COURSES, WHY_CHOOSE, BATCHES_INFO, STATS } from "@/lib/academy";
 
@@ -167,6 +168,7 @@ export function HomeSections({
         </div>
       </section>
 
+      {faculty.length > 0 && (
       <section id="faculty" className="py-20 px-4 md:px-6 bg-ssa-surface/30">
         <div className="mx-auto max-w-7xl">
           <h2 className="text-3xl font-bold text-center mb-12">Our Faculty</h2>
@@ -184,6 +186,7 @@ export function HomeSections({
           </div>
         </div>
       </section>
+      )}
 
       <section id="reviews" className="py-20 px-4 md:px-6">
         <div className="mx-auto max-w-7xl">
@@ -208,7 +211,7 @@ export function HomeSections({
       <section id="batches" className="py-20 px-4 md:px-6 bg-ssa-surface/30">
         <div className="mx-auto max-w-7xl">
           <h2 className="text-3xl font-bold text-center mb-12">Batch Information</h2>
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 max-w-3xl mx-auto">
             {BATCHES_INFO.map((b) => (
               <div key={b.name} className="glass-strong rounded-2xl p-6 card-hover border-l-4 border-l-ssa-primary">
                 <h3 className="font-bold text-lg">{b.name}</h3>
@@ -228,6 +231,12 @@ export function HomeSections({
             <a href={`tel:${ACADEMY.phone}`} className="btn-primary inline-flex mb-4">
               <Phone className="h-4 w-4" /> {ACADEMY.phone}
             </a>
+            <a href={`tel:${ACADEMY.phone2}`} className="btn-ghost inline-flex mb-4 ml-0 md:ml-3">
+              <Phone className="h-4 w-4" /> {ACADEMY.phone2}
+            </a>
+            <a href={`mailto:${ACADEMY.email}`} className="flex items-center gap-2 text-sm text-ssa-muted mb-4 hover:text-ssa-primary">
+              <Mail className="h-4 w-4 text-ssa-primary" /> {ACADEMY.email}
+            </a>
             <p className="text-sm text-ssa-muted">{ACADEMY.timings}</p>
             <a
               href={ACADEMY.whatsapp}
@@ -241,7 +250,7 @@ export function HomeSections({
           <div className="glass rounded-2xl overflow-hidden h-80 min-h-[320px]">
             <iframe
               title="Smart Step Academy Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3718.5!2d82.1408!3d22.0797!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a280de8d7e2f5b7%3A0x8f8f8f8f!2sBilaspur%2C%20Chhattisgarh!5e0!3m2!1sen!2sin!4v1"
+              src={ACADEMY.mapEmbed}
               width="100%"
               height="100%"
               style={{ border: 0 }}

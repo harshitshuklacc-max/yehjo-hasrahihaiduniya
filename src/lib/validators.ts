@@ -102,3 +102,12 @@ export const announcementSchema = z.object({
   batchId: z.string().optional().nullable(),
   targetRole: z.string().optional(),
 });
+
+export const facultyShowcaseSchema = z.object({
+  name: z.string().min(2),
+  subject: z.string().min(1),
+  experience: z.string().min(1),
+  bio: z.string().optional(),
+  order: z.number().optional(),
+  isActive: z.boolean().optional(),
+});

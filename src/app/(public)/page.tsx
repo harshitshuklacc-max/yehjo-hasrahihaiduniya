@@ -6,13 +6,6 @@ export const dynamic = "force-dynamic";
 type Faculty = { id: string; name: string; subject: string; experience: string; bio: string | null };
 type Testimonial = { id: string; author: string; role: string; rating: number; content: string };
 
-const fallbackFaculty: Faculty[] = [
-  { id: "1", name: "Mr. Rajesh Verma", subject: "Mathematics", experience: "12+ years", bio: null },
-  { id: "2", name: "Mrs. Priya Sharma", subject: "Science", experience: "10+ years", bio: null },
-  { id: "3", name: "Mr. Amit Patel", subject: "Commerce", experience: "8+ years", bio: null },
-  { id: "4", name: "Mrs. Sneha Dubey", subject: "English", experience: "9+ years", bio: null },
-];
-
 const fallbackTestimonials: Testimonial[] = [
   {
     id: "1",
@@ -41,7 +34,7 @@ const fallbackTestimonials: Testimonial[] = [
 ];
 
 export default async function HomePage() {
-  let faculty: Faculty[] = fallbackFaculty;
+  let faculty: Faculty[] = [];
   let testimonials: Testimonial[] = fallbackTestimonials;
   let dbReady = true;
 
@@ -50,7 +43,7 @@ export default async function HomePage() {
       prisma.facultyShowcase.findMany({ where: { isActive: true }, orderBy: { order: "asc" } }),
       prisma.testimonial.findMany({ where: { isActive: true }, take: 6, orderBy: { createdAt: "desc" } }),
     ]);
-    faculty = dbFaculty.length > 0 ? dbFaculty : fallbackFaculty;
+    faculty = dbFaculty;
     testimonials = dbTestimonials.length > 0 ? dbTestimonials : fallbackTestimonials;
   } catch {
     dbReady = false;

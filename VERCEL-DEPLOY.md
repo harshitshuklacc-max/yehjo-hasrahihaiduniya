@@ -59,7 +59,9 @@ npm run dev
 
 | Problem | Fix |
 |--------|-----|
-| Build fails on Prisma | Check `DATABASE_URL` and `DIRECT_URL` in Vercel env vars |
+| Build fails on `prisma db push` | Set **both** `DATABASE_URL` (pooled) and `DIRECT_URL` (direct, no pooler) in Vercel env vars |
+| `Missing required environment variable: DIRECT_URL` | In Neon dashboard, copy the **direct** connection string (not the pooler one) into `DIRECT_URL` |
+| `DIRECT_URL must be the Neon direct connection` | You pasted the pooler URL into `DIRECT_URL` — swap: pooled → `DATABASE_URL`, direct → `DIRECT_URL` |
 | Admin login: database error | Redeploy after env vars are set; check Neon project is active |
 | Login works but home shows DB warning | Redeploy; confirm Neon allows connections from Vercel |
 

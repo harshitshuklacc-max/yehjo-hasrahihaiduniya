@@ -12,6 +12,7 @@ import {
   FileText,
   CalendarDays,
   User,
+  ClipboardCheck,
 } from "lucide-react";
 import type { NavItem } from "@/components/dashboard/DashboardShell";
 
@@ -23,6 +24,7 @@ export const adminNav: NavItem[] = [
   { href: "/admin/timetable", label: "Timetable", icon: <Calendar className="h-4 w-4" /> },
   { href: "/admin/fees", label: "Fees", icon: <IndianRupee className="h-4 w-4" /> },
   { href: "/admin/homework", label: "Homework", icon: <BookOpen className="h-4 w-4" /> },
+  { href: "/admin/attendance", label: "Attendance", icon: <ClipboardCheck className="h-4 w-4" /> },
   { href: "/admin/announcements", label: "Notices", icon: <Megaphone className="h-4 w-4" /> },
   { href: "/admin/leaves", label: "Leave Requests", icon: <ClipboardList className="h-4 w-4" /> },
   { href: "/admin/archive", label: "Archive", icon: <Archive className="h-4 w-4" /> },
@@ -33,6 +35,7 @@ export const teacherNav: NavItem[] = [
   { href: "/teacher/homework", label: "Homework", icon: <BookOpen className="h-4 w-4" /> },
   { href: "/teacher/materials", label: "Study Materials", icon: <FileText className="h-4 w-4" /> },
   { href: "/teacher/tests", label: "Tests", icon: <CalendarDays className="h-4 w-4" /> },
+  { href: "/teacher/attendance", label: "Attendance", icon: <ClipboardCheck className="h-4 w-4" /> },
   { href: "/teacher/leave", label: "Leave", icon: <ClipboardList className="h-4 w-4" /> },
 ];
 
@@ -41,6 +44,7 @@ export const studentNav: NavItem[] = [
   { href: "/student/profile", label: "Profile", icon: <User className="h-4 w-4" /> },
   { href: "/student/timetable", label: "Timetable", icon: <Calendar className="h-4 w-4" /> },
   { href: "/student/homework", label: "Homework", icon: <BookOpen className="h-4 w-4" /> },
+  { href: "/student/attendance", label: "Attendance", icon: <ClipboardCheck className="h-4 w-4" /> },
   { href: "/student/fees", label: "Fees", icon: <IndianRupee className="h-4 w-4" /> },
   { href: "/student/tests", label: "Tests", icon: <CalendarDays className="h-4 w-4" /> },
   { href: "/student/notices", label: "Notices", icon: <Megaphone className="h-4 w-4" /> },

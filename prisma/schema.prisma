@@ -41,6 +41,8 @@ model User {
   student       Student?
   loginLogs     LoginActivity[]
   announcements Announcement[]
+  uploadedAttendanceReports AttendanceReport[] @relation("UploadedAttendanceReports")
+  attendanceReportRecipients AttendanceReportRecipient[]
 }
 
 model Teacher {
@@ -179,6 +181,31 @@ model Attendance {
   note      String?
 
   @@unique([studentId, date])
+}
+
+model AttendanceReport {
+  id           String   @id @default(cuid())
+  title        String
+  month        Int
+  year         Int
+  fileName     String
+  fileData     String
+  uploadedById String
+  uploadedBy   User     @relation("UploadedAttendanceReports", fields: [uploadedById], references: [id])
+  createdAt    DateTime @default(now())
+  recipients   AttendanceReportRecipient[]
+}
+
+model AttendanceReportRecipient {
+  id          String           @id @default(cuid())
+  reportId    String
+  report      AttendanceReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role        UserRole
+  matchedName String
+
+  @@unique([reportId, userId])
 }
 
 model LoginActivity {

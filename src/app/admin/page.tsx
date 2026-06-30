@@ -55,6 +55,7 @@ export default function AdminDashboardPage() {
               ["/admin/students", "Add Student"],
               ["/admin/teachers", "Add Teacher"],
               ["/admin/timetable", "Manage Timetable"],
+              ["/admin/attendance", "Upload Attendance"],
               ["/admin/leaves", "Review Leaves"],
             ].map(([href, label]) => (
               <Link key={href} href={href} className="rounded-xl border border-white/10 px-4 py-3 text-sm hover:border-ssa-primary/50 transition">

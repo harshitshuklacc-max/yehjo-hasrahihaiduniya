@@ -10,6 +10,7 @@ export default function TeacherDashboardPage() {
         <Link href="/teacher/homework" className="rounded-xl border border-white/10 p-4 hover:border-ssa-primary/50">Post Homework by Class</Link>
         <Link href="/teacher/materials" className="rounded-xl border border-white/10 p-4 hover:border-ssa-primary/50">Upload Study Materials</Link>
         <Link href="/teacher/tests" className="rounded-xl border border-white/10 p-4 hover:border-ssa-primary/50">Schedule Tests</Link>
+        <Link href="/teacher/attendance" className="rounded-xl border border-white/10 p-4 hover:border-ssa-primary/50">View Attendance PDFs</Link>
         <Link href="/teacher/leave" className="rounded-xl border border-white/10 p-4 hover:border-ssa-primary/50">Apply for Leave</Link>
       </div>
     </div>

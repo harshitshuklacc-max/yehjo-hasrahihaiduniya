@@ -61,6 +61,27 @@ function requireEnv(name) {
   return value;
 }
 
+function syncDatabase() {
+  run("Pre-migration cleanup", "node scripts/prepare-db.mjs");
+
+  try {
+    runWithRetry(
+      "Database schema sync",
+      "npx prisma db push --accept-data-loss --skip-generate",
+      2
+    );
+  } catch {
+    console.warn(
+      "\nSchema sync blocked by old database data.\n" +
+        "Resetting database and applying fresh schema (admin user will be re-seeded)...\n"
+    );
+    run(
+      "Database reset",
+      "npx prisma db push --force-reset --skip-generate"
+    );
+  }
+}
+
 requireEnv("DATABASE_URL");
 requireEnv("DIRECT_URL");
 requireEnv("JWT_SECRET");
@@ -76,10 +97,7 @@ if (directUrl.includes("-pooler.") || directUrl.includes("pgbouncer=true")) {
 
 try {
   run("Prisma generate", "npx prisma generate");
-  runWithRetry(
-    "Database schema sync",
-    "npx prisma db push --accept-data-loss --skip-generate"
-  );
+  syncDatabase();
   run("Seed admin user", "npx prisma db seed");
   run("Next.js build", "npx next build");
 } catch {

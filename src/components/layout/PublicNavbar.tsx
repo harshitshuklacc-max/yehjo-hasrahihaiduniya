@@ -11,7 +11,6 @@ const baseLinks = [
   { href: "#courses", label: "Courses" },
   { href: "#faculty", label: "Faculty" },
   { href: "#reviews", label: "Reviews" },
-  { href: "#batches", label: "Batches" },
   { href: "#contact", label: "Contact" },
 ];
 

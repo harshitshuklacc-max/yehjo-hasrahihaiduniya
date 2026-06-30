@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
       data: {
         title: body.title,
         body: body.body,
-        batchId: body.batchId || null,
+        classLevel: body.classLevel || null,
         targetRole: body.targetRole || null,
         createdById: session.userId,
       },

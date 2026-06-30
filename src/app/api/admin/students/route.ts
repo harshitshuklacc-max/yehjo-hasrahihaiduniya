@@ -27,7 +27,6 @@ export async function GET(req: NextRequest) {
     },
     include: {
       user: { select: { id: true, name: true, username: true, phone: true, isActive: true } },
-      batch: true,
       feeRecord: true,
     },
     orderBy: { createdAt: "desc" },
@@ -60,7 +59,6 @@ export async function POST(req: NextRequest) {
             parentName: body.parentName,
             parentPhone: body.parentPhone,
             address: body.address,
-            batchId: body.batchId || null,
             recordExpiresAt: expiresAt,
             feeRecord: body.totalFees
               ? {

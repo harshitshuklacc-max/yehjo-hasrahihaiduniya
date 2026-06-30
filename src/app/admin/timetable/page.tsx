@@ -1,28 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useToast } from "@/components/providers/ToastProvider";
 import { DAYS } from "@/lib/utils";
+import { CLASS_LEVELS } from "@/lib/academy";
 
 export default function AdminTimetablePage() {
   const { toast } = useToast();
-  const [batches, setBatches] = useState<{ id: string; name: string }[]>([]);
-  const [batchId, setBatchId] = useState("");
+  const [classLevel, setClassLevel] = useState("");
   const [slots, setSlots] = useState<
     { dayOfWeek: number; startTime: string; endTime: string; subject: string }[]
   >([{ dayOfWeek: 1, startTime: "09:00", endTime: "10:00", subject: "Math" }]);
 
-  useEffect(() => {
-    fetch("/api/admin/batches").then((r) => r.json()).then(setBatches);
-  }, []);
-
   async function save(e: React.FormEvent) {
     e.preventDefault();
-    if (!batchId) return;
+    if (!classLevel) return;
     const res = await fetch("/api/admin/timetable", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ batchId, slots }),
+      body: JSON.stringify({ classLevel, slots }),
     });
     toast(res.ok ? "Timetable saved" : "Failed", res.ok ? "success" : "error");
   }
@@ -30,10 +26,10 @@ export default function AdminTimetablePage() {
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold">Timetable Manager</h2>
-      <select value={batchId} onChange={(e) => setBatchId(e.target.value)}>
-        <option value="">Select batch</option>
-        {batches.map((b) => (
-          <option key={b.id} value={b.id}>{b.name}</option>
+      <select value={classLevel} onChange={(e) => setClassLevel(e.target.value)}>
+        <option value="">Select class</option>
+        {CLASS_LEVELS.map((c) => (
+          <option key={c} value={c}>{c}</option>
         ))}
       </select>
       <form onSubmit={save} className="space-y-4">

@@ -17,7 +17,7 @@ import {
   ArrowRight,
   Mail,
 } from "lucide-react";
-import { ACADEMY, COURSES, WHY_CHOOSE, BATCHES_INFO, STATS } from "@/lib/academy";
+import { ACADEMY, COURSES, WHY_CHOOSE, STATS } from "@/lib/academy";
 
 const iconMap: Record<string, React.ElementType> = {
   trophy: Trophy,
@@ -202,21 +202,6 @@ export function HomeSections({
                 <p className="text-sm text-ssa-muted italic">&ldquo;{t.content}&rdquo;</p>
                 <p className="mt-4 font-semibold text-sm">{t.author}</p>
                 <p className="text-xs text-ssa-muted">{t.role}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="batches" className="py-20 px-4 md:px-6 bg-ssa-surface/30">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="text-3xl font-bold text-center mb-12">Batch Information</h2>
-          <div className="grid gap-6 md:grid-cols-2 max-w-3xl mx-auto">
-            {BATCHES_INFO.map((b) => (
-              <div key={b.name} className="glass-strong rounded-2xl p-6 card-hover border-l-4 border-l-ssa-primary">
-                <h3 className="font-bold text-lg">{b.name}</h3>
-                <p className="text-ssa-primary text-sm mt-1">{b.timing}</p>
-                <p className="text-ssa-muted text-sm mt-2">{b.classes}</p>
               </div>
             ))}
           </div>

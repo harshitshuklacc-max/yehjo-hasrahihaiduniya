@@ -8,7 +8,6 @@ export async function GET() {
 
   const homework = await prisma.homework.findMany({
     include: {
-      batch: true,
       teacher: { include: { user: { select: { name: true } } } },
     },
     orderBy: { dueDate: "asc" },

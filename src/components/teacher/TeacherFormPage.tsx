@@ -3,15 +3,14 @@
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/providers/ToastProvider";
 import { formatDate } from "@/lib/utils";
+import { CLASS_LEVELS } from "@/lib/academy";
 
 export function TeacherHomeworkPage() {
   const { toast } = useToast();
-  const [batches, setBatches] = useState<{ id: string; name: string }[]>([]);
-  const [items, setItems] = useState<{ id: string; title: string; dueDate: string; batch: { name: string } }[]>([]);
-  const [form, setForm] = useState({ batchId: "", title: "", description: "", dueDate: "" });
+  const [items, setItems] = useState<{ id: string; title: string; dueDate: string; classLevel: string }[]>([]);
+  const [form, setForm] = useState({ classLevel: "", title: "", description: "", dueDate: "" });
 
   useEffect(() => {
-    fetch("/api/teacher/batches").then((r) => r.json()).then(setBatches);
     fetch("/api/teacher/homework").then((r) => r.json()).then(setItems);
   }, []);
 
@@ -24,7 +23,7 @@ export function TeacherHomeworkPage() {
     });
     toast(res.ok ? "Homework posted" : "Failed", res.ok ? "success" : "error");
     if (res.ok) {
-      setForm({ batchId: "", title: "", description: "", dueDate: "" });
+      setForm({ classLevel: "", title: "", description: "", dueDate: "" });
       fetch("/api/teacher/homework").then((r) => r.json()).then(setItems);
     }
   }
@@ -33,9 +32,9 @@ export function TeacherHomeworkPage() {
     <div className="space-y-6">
       <h2 className="text-2xl font-bold">Homework</h2>
       <form onSubmit={submit} className="glass rounded-2xl p-6 space-y-4 max-w-lg">
-        <select value={form.batchId} onChange={(e) => setForm({ ...form, batchId: e.target.value })} required>
-          <option value="">Select batch</option>
-          {batches.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
+        <select value={form.classLevel} onChange={(e) => setForm({ ...form, classLevel: e.target.value })} required>
+          <option value="">Select class</option>
+          {CLASS_LEVELS.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
         <input placeholder="Title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} required />
         <textarea placeholder="Description" rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} required />
@@ -46,7 +45,7 @@ export function TeacherHomeworkPage() {
         {items.map((h) => (
           <div key={h.id} className="glass rounded-xl p-4">
             <p className="font-semibold">{h.title}</p>
-            <p className="text-xs text-ssa-muted">{h.batch.name} · Due {formatDate(h.dueDate)}</p>
+            <p className="text-xs text-ssa-muted">{h.classLevel} · Due {formatDate(h.dueDate)}</p>
           </div>
         ))}
       </div>
@@ -56,12 +55,7 @@ export function TeacherHomeworkPage() {
 
 export function TeacherMaterialsPage() {
   const { toast } = useToast();
-  const [batches, setBatches] = useState<{ id: string; name: string }[]>([]);
-  const [form, setForm] = useState({ batchId: "", title: "", fileUrl: "", description: "" });
-
-  useEffect(() => {
-    fetch("/api/teacher/batches").then((r) => r.json()).then(setBatches);
-  }, []);
+  const [form, setForm] = useState({ classLevel: "", title: "", fileUrl: "", description: "" });
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -77,9 +71,9 @@ export function TeacherMaterialsPage() {
     <div className="space-y-6">
       <h2 className="text-2xl font-bold">Study Materials</h2>
       <form onSubmit={submit} className="glass rounded-2xl p-6 space-y-4 max-w-lg">
-        <select value={form.batchId} onChange={(e) => setForm({ ...form, batchId: e.target.value })} required>
-          <option value="">Select batch</option>
-          {batches.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
+        <select value={form.classLevel} onChange={(e) => setForm({ ...form, classLevel: e.target.value })} required>
+          <option value="">Select class</option>
+          {CLASS_LEVELS.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
         <input placeholder="Title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} required />
         <input placeholder="File URL (PDF/Drive link)" value={form.fileUrl} onChange={(e) => setForm({ ...form, fileUrl: e.target.value })} required />
@@ -92,14 +86,9 @@ export function TeacherMaterialsPage() {
 
 export function TeacherTestsPage() {
   const { toast } = useToast();
-  const [batches, setBatches] = useState<{ id: string; name: string }[]>([]);
   const [form, setForm] = useState({
-    batchId: "", subject: "", syllabus: "", testDate: "", startTime: "", endTime: "", instructions: "",
+    classLevel: "", subject: "", syllabus: "", testDate: "", startTime: "", endTime: "", instructions: "",
   });
-
-  useEffect(() => {
-    fetch("/api/teacher/batches").then((r) => r.json()).then(setBatches);
-  }, []);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -115,9 +104,9 @@ export function TeacherTestsPage() {
     <div className="space-y-6">
       <h2 className="text-2xl font-bold">Test Schedule</h2>
       <form onSubmit={submit} className="glass rounded-2xl p-6 grid gap-4 sm:grid-cols-2 max-w-2xl">
-        <select value={form.batchId} onChange={(e) => setForm({ ...form, batchId: e.target.value })} required className="sm:col-span-2">
-          <option value="">Select batch</option>
-          {batches.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
+        <select value={form.classLevel} onChange={(e) => setForm({ ...form, classLevel: e.target.value })} required className="sm:col-span-2">
+          <option value="">Select class</option>
+          {CLASS_LEVELS.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
         <input placeholder="Subject" value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} required />
         <input type="date" value={form.testDate} onChange={(e) => setForm({ ...form, testDate: e.target.value })} required />

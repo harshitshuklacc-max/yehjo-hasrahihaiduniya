@@ -30,7 +30,6 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
         parentName: body.parentName,
         parentPhone: body.parentPhone,
         address: body.address,
-        batchId: body.batchId === null ? null : body.batchId ?? undefined,
       },
     });
 

@@ -10,7 +10,6 @@ export async function GET() {
 
   const items = await prisma.homework.findMany({
     where: { teacherId: session.teacherId },
-    include: { batch: true },
     orderBy: { dueDate: "asc" },
   });
   return jsonOk(items);
@@ -22,14 +21,9 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = homeworkSchema.parse(await req.json());
-    const link = await prisma.batchTeacher.findFirst({
-      where: { batchId: body.batchId, teacherId: session.teacherId },
-    });
-    if (!link) return jsonError("Not assigned to this batch", 403);
-
     const hw = await prisma.homework.create({
       data: {
-        batchId: body.batchId,
+        classLevel: body.classLevel,
         teacherId: session.teacherId,
         title: body.title,
         description: body.description,

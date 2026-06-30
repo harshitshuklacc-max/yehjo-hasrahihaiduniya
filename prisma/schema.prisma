@@ -52,7 +52,6 @@ model Teacher {
   experience    String?
   bio           String?
   photo         String?
-  batchLinks    BatchTeacher[]
   homeworks     Homework[]
   materials     StudyMaterial[]
   tests         TestSchedule[]
@@ -68,8 +67,6 @@ model Student {
   parentPhone     String?
   classLevel      String
   address         String?
-  batchId         String?
-  batch           Batch?            @relation(fields: [batchId], references: [id])
   isArchived      Boolean           @default(false)
   archivedAt      DateTime?
   recordExpiresAt DateTime?
@@ -79,50 +76,20 @@ model Student {
   updatedAt       DateTime          @updatedAt
 }
 
-model Batch {
-  id          String          @id @default(cuid())
-  name        String
-  classLevel  String
-  stream      String?
-  timing      String?
-  capacity    Int             @default(30)
-  isActive    Boolean         @default(true)
-  students    Student[]
-  teachers    BatchTeacher[]
-  timetable   TimetableSlot[]
-  homeworks   Homework[]
-  materials   StudyMaterial[]
-  tests       TestSchedule[]
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
-}
-
-model BatchTeacher {
-  id        String  @id @default(cuid())
-  batchId   String
-  batch     Batch   @relation(fields: [batchId], references: [id], onDelete: Cascade)
-  teacherId String
-  teacher   Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
-
-  @@unique([batchId, teacherId])
-}
-
 model TimetableSlot {
-  id        String  @id @default(cuid())
-  batchId   String
-  batch     Batch   @relation(fields: [batchId], references: [id], onDelete: Cascade)
-  dayOfWeek Int
-  startTime String
-  endTime   String
-  subject   String
-  teacherId String?
-  room      String?
+  id         String  @id @default(cuid())
+  classLevel String
+  dayOfWeek  Int
+  startTime  String
+  endTime    String
+  subject    String
+  teacherId  String?
+  room       String?
 }
 
 model Homework {
   id          String   @id @default(cuid())
-  batchId     String
-  batch       Batch    @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  classLevel  String
   teacherId   String
   teacher     Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   title       String
@@ -134,8 +101,7 @@ model Homework {
 
 model StudyMaterial {
   id          String   @id @default(cuid())
-  batchId     String
-  batch       Batch    @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  classLevel  String
   teacherId   String
   teacher     Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   title       String
@@ -148,7 +114,7 @@ model Announcement {
   id          String   @id @default(cuid())
   title       String
   body        String
-  batchId     String?
+  classLevel  String?
   targetRole  String?
   createdById String
   createdBy   User     @relation(fields: [createdById], references: [id])
@@ -179,8 +145,7 @@ model FeePayment {
 
 model TestSchedule {
   id           String   @id @default(cuid())
-  batchId      String
-  batch        Batch    @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  classLevel   String
   teacherId    String
   teacher      Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   subject      String
@@ -209,7 +174,6 @@ model Attendance {
   id        String           @id @default(cuid())
   studentId String
   student   Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  batchId   String
   date      DateTime
   status    AttendanceStatus @default(PRESENT)
   note      String?

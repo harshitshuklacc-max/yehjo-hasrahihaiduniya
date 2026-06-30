@@ -5,7 +5,7 @@ import { formatDate } from "@/lib/utils";
 
 export default function AdminHomeworkPage() {
   const [items, setItems] = useState<
-    { id: string; title: string; dueDate: string; batch: { name: string }; teacher: { user: { name: string } } }[]
+    { id: string; title: string; dueDate: string; classLevel: string; teacher: { user: { name: string } } }[]
   >([]);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function AdminHomeworkPage() {
           <div key={h.id} className="glass rounded-xl p-4 flex flex-wrap justify-between gap-2">
             <div>
               <p className="font-semibold">{h.title}</p>
-              <p className="text-xs text-ssa-muted">{h.batch.name} · {h.teacher.user.name}</p>
+              <p className="text-xs text-ssa-muted">{h.classLevel} · {h.teacher.user.name}</p>
             </div>
             <span className="text-xs text-ssa-accent">Due {formatDate(h.dueDate)}</span>
           </div>

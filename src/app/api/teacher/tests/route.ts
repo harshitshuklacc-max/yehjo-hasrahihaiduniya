@@ -10,7 +10,6 @@ export async function GET() {
 
   const tests = await prisma.testSchedule.findMany({
     where: { teacherId: session.teacherId },
-    include: { batch: true },
     orderBy: { testDate: "asc" },
   });
   return jsonOk(tests);
@@ -24,7 +23,7 @@ export async function POST(req: NextRequest) {
     const body = testSchema.parse(await req.json());
     const test = await prisma.testSchedule.create({
       data: {
-        batchId: body.batchId,
+        classLevel: body.classLevel,
         teacherId: session.teacherId,
         subject: body.subject,
         syllabus: body.syllabus,

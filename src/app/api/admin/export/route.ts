@@ -11,15 +11,14 @@ export async function GET(req: NextRequest) {
 
   if (type === "students") {
     const students = await prisma.student.findMany({
-      include: { user: true, batch: true, feeRecord: true },
+      include: { user: true, feeRecord: true },
     });
     const rows = [
-      ["Name", "Username", "Class", "Batch", "Total Fees", "Paid", "Remaining"],
+      ["Name", "Username", "Class", "Total Fees", "Paid", "Remaining"],
       ...students.map((s) => [
         s.user.name,
         s.user.username,
         s.classLevel,
-        s.batch?.name || "",
         String(s.feeRecord?.totalFees ?? 0),
         String(s.feeRecord?.paidFees ?? 0),
         String((s.feeRecord?.totalFees ?? 0) - (s.feeRecord?.paidFees ?? 0)),

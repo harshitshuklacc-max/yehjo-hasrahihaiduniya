@@ -77,9 +77,15 @@ export const WHY_CHOOSE = [
   },
 ];
 
-export const BATCHES_INFO = [
-  { name: "Afternoon Batch", timing: "2:00 PM – 6:00 PM", classes: "11th & 12th Commerce" },
-  { name: "Evening Batch", timing: "5:00 PM – 9:00 PM", classes: "5th – 12th" },
+export const CLASS_LEVELS = [
+  "5th",
+  "6th",
+  "7th",
+  "8th",
+  "9th",
+  "10th",
+  "11th Commerce",
+  "12th Commerce",
 ];
 
 export const STATS = [

@@ -3,7 +3,6 @@ import {
   Users,
   GraduationCap,
   UserCircle,
-  Layers,
   Calendar,
   IndianRupee,
   Megaphone,
@@ -21,7 +20,6 @@ export const adminNav: NavItem[] = [
   { href: "/admin/teachers", label: "Teachers", icon: <GraduationCap className="h-4 w-4" /> },
   { href: "/admin/faculty", label: "Homepage Faculty", icon: <UserCircle className="h-4 w-4" /> },
   { href: "/admin/students", label: "Students", icon: <Users className="h-4 w-4" /> },
-  { href: "/admin/batches", label: "Batches", icon: <Layers className="h-4 w-4" /> },
   { href: "/admin/timetable", label: "Timetable", icon: <Calendar className="h-4 w-4" /> },
   { href: "/admin/fees", label: "Fees", icon: <IndianRupee className="h-4 w-4" /> },
   { href: "/admin/homework", label: "Homework", icon: <BookOpen className="h-4 w-4" /> },
@@ -32,7 +30,6 @@ export const adminNav: NavItem[] = [
 
 export const teacherNav: NavItem[] = [
   { href: "/teacher", label: "Dashboard", icon: <LayoutDashboard className="h-4 w-4" /> },
-  { href: "/teacher/batches", label: "My Batches", icon: <Layers className="h-4 w-4" /> },
   { href: "/teacher/homework", label: "Homework", icon: <BookOpen className="h-4 w-4" /> },
   { href: "/teacher/materials", label: "Study Materials", icon: <FileText className="h-4 w-4" /> },
   { href: "/teacher/tests", label: "Tests", icon: <CalendarDays className="h-4 w-4" /> },

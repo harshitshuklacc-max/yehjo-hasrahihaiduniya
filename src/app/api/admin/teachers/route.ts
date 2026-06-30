@@ -22,7 +22,6 @@ export async function GET(req: NextRequest) {
       : undefined,
     include: {
       user: { select: { id: true, name: true, username: true, phone: true, email: true, isActive: true } },
-      batchLinks: { include: { batch: true } },
     },
     orderBy: { createdAt: "desc" },
   });

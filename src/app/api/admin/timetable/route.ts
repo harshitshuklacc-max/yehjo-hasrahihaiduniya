@@ -7,11 +7,11 @@ import { timetableSchema } from "@/lib/validators";
 export async function GET(req: NextRequest) {
   const session = await getAdminSession();
   if (!session) return jsonError("Unauthorized", 401);
-  const batchId = req.nextUrl.searchParams.get("batchId");
-  if (!batchId) return jsonError("batchId required");
+  const classLevel = req.nextUrl.searchParams.get("classLevel");
+  if (!classLevel) return jsonError("classLevel required");
 
   const slots = await prisma.timetableSlot.findMany({
-    where: { batchId },
+    where: { classLevel },
     orderBy: [{ dayOfWeek: "asc" }, { startTime: "asc" }],
   });
   return jsonOk(slots);
@@ -23,8 +23,10 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = timetableSchema.parse(await req.json());
-    await prisma.timetableSlot.deleteMany({ where: { batchId: body.batchId } });
-    await prisma.timetableSlot.createMany({ data: body.slots.map((s) => ({ ...s, batchId: body.batchId })) });
+    await prisma.timetableSlot.deleteMany({ where: { classLevel: body.classLevel } });
+    await prisma.timetableSlot.createMany({
+      data: body.slots.map((s) => ({ ...s, classLevel: body.classLevel })),
+    });
     return jsonOk({ ok: true });
   } catch (e) {
     return handleZodError(e);

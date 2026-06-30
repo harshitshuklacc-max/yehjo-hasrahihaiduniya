@@ -5,7 +5,7 @@ import { Shield, GraduationCap, BookOpen } from "lucide-react";
 
 const portals = [
   { href: "/login/admin", label: "Admin Portal", icon: Shield, desc: "Manage institute operations" },
-  { href: "/login/teacher", label: "Teacher Portal", icon: GraduationCap, desc: "Homework, tests & batches" },
+  { href: "/login/teacher", label: "Teacher Portal", icon: GraduationCap, desc: "Homework, tests & materials" },
   { href: "/login/student", label: "Student Portal", icon: BookOpen, desc: "Fees, homework & timetable" },
 ];
 

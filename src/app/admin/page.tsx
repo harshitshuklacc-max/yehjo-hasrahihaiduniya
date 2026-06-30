@@ -40,7 +40,7 @@ export default function AdminDashboardPage() {
         stats={[
           { label: "Active Students", value: s.students },
           { label: "Teachers", value: s.teachers },
-          { label: "Active Batches", value: s.batches },
+          { label: "Classes", value: s.classes },
           { label: "Pending Leaves", value: s.pendingLeaves },
           { label: "Fees Collected", value: formatPrice(s.totalCollected) },
           { label: "Outstanding Fees", value: formatPrice(s.totalDue) },
@@ -54,7 +54,7 @@ export default function AdminDashboardPage() {
             {[
               ["/admin/students", "Add Student"],
               ["/admin/teachers", "Add Teacher"],
-              ["/admin/batches", "Manage Batches"],
+              ["/admin/timetable", "Manage Timetable"],
               ["/admin/leaves", "Review Leaves"],
             ].map(([href, label]) => (
               <Link key={href} href={href} className="rounded-xl border border-white/10 px-4 py-3 text-sm hover:border-ssa-primary/50 transition">
